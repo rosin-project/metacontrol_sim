@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<robot name="ridgeback_yumi" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <arg name="arms_interface" default="PositionJointInterface" />
+  <arg name="grippers_interface" default="EffortJointInterface"/>
+
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find yumi_description)/urdf/Util/materials.xacro" />
+  <!-- Import utilities -->
+  <xacro:include filename="$(find yumi_description)/urdf/Util/utilities.xacro" />
+  <!--Import the yumi macro -->
+  <xacro:include filename="$(find yumi_description)/urdf/yumi.xacro"/>
+  <!--Import the yumi servo gripper macro -->
+  <xacro:include filename="$(find yumi_description)/urdf/Grippers/yumi_servo_gripper.xacro"/>
+  <!-- Import Gazebo plugins
+  <xacro:include filename="$(find yumi_description)/urdf/Gazebo/gazebo.urdf.xacro"/>
+  -->
+  <!-- URDF -->
+  <xacro:include filename="$(find metacontrol_sim)/urdf/ridgeback/ridgeback.urdf.xacro"/>
+  <xacro:ridgeback_urdf />
+
+  <!-- Gazebo -->
+  <xacro:include filename="$(find metacontrol_sim)/urdf/ridgeback/ridgeback.gazebo.xacro"/>
+  <xacro:ridgeback_gazebo />
+
+  <!-- Optional standard accessories, including their simulation data. The rendering
+       of these into the final description is controlled by optenv variables, which
+       default each one to off.-->
+  <xacro:include filename="$(find metacontrol_sim)/urdf/ridgeback/accessories.urdf.xacro" />
+  <xacro:ridgeback_accesories />
+
+  <!--yumi -->
+  <xacro:property name="yumi_parent" value="base_link" />
+    <joint name="ridgeback_to_yumi" type="fixed">
+      <parent link="base_link"/>
+      <child link="yumi_base_link"/>
+      <origin xyz="0 0 0.375" rpy="0 0 0" />
+    </joint>
+
+
+    <xacro:yumi name="yumi" hardware_interface="hardware_interface/$(arg arms_interface)" parent="${yumi_parent}" >
+      <origin xyz="0 0 0.1" rpy="0 0 0" />
+    </xacro:yumi>
+
+    <!--right gripper -->
+    <xacro:yumi_servo_gripper name="gripper_r" hardware_interface="hardware_interface/$(arg grippers_interface)" parent="yumi_link_7_r">
+      <origin xyz="0 0 0.007" rpy="0 0 ${PI}" />
+    </xacro:yumi_servo_gripper>
+
+    <!--left gripper -->
+    <xacro:yumi_servo_gripper name="gripper_l" hardware_interface="hardware_interface/$(arg grippers_interface)" parent="yumi_link_7_l">
+      <origin xyz="0 0 0.007" rpy="0 0 ${PI}" />
+    </xacro:yumi_servo_gripper>
+
+</robot>

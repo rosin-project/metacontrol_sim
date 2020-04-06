@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="gui" default="true" />
+  <!-- <arg name="config" default="$(optenv RIDGEBACK_CONFIG empty)" /> -->
+
+  <param name="robot_description" command="$(find xacro)/xacro $(find metacontrol_sim)/urdf/ridgeback/ridgeback.xacro " />
+
+  <!-- <param name="robot_description" command="$(find xacro)/xacro '$(find metacontrol_sim)/urdf/roboto.xacro'" /> -->
+
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="use_gui" value = "$(arg gui)" />
+  </node>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find metacontrol_sim)/config/test_viz.rviz" required="true" />
+</launch>

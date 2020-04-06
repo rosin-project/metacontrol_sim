@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<robot name="ridgeback" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- URDF -->
+  <xacro:include filename="$(find metacontrol_sim)/urdf/ridgeback/ridgeback.urdf.xacro"/>
+  <xacro:ridgeback_urdf />
+
+  <!-- Gazebo -->
+  <xacro:include filename="$(find metacontrol_sim)/urdf/ridgeback/ridgeback.gazebo.xacro"/>
+  <xacro:ridgeback_gazebo />
+
+<!-- Optional standard accessories, including their simulation data. The rendering
+     of these into the final description is controlled by optenv variables, which
+     default each one to off.-->
+<xacro:include filename="$(find metacontrol_sim)/urdf/ridgeback/accessories.urdf.xacro" />
+<xacro:ridgeback_accesories />
+
+
+
+</robot>
