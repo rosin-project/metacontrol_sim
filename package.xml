@@ -55,6 +55,8 @@
   <build_export_depend>ridgeback_description</build_export_depend>
   <exec_depend>yumi_description</exec_depend>
   <exec_depend>ridgeback_description</exec_depend>
+  <exec_depend>hector_xacro_tools</exec_depend>
+  <exec_depend>ridgeback_control</exec_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
