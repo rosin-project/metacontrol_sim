@@ -21,7 +21,7 @@
   </include>
 
   <!-- Load Ridgeback's description, controllers, and teleop nodes. -->
-  <include file="$(find metacontrol_sim)/launch/description2.launch">
+  <include file="$(find metacontrol_sim)/launch/description_ridgeback.launch">
     <arg name="config" value="$(arg config)" />
   </include>
   <include file="$(find ridgeback_control)/launch/control.launch" />
@@ -29,28 +29,7 @@
   <include file="$(find ridgeback_control)/launch/teleop.launch">
     <arg name="joystick" value="false"/>
   </include>
-  -->
-
-  <rosparam file="$(find yumi_control)/config/gripper_controllers.yaml" command="load" ns="/yumi"/>
-  <arg name="arm_controllers" default="joint_state_controller
-                   joint_pos_controller_1_r
-                   joint_pos_controller_2_r
-                   joint_pos_controller_7_r
-                   joint_pos_controller_3_r
-                   joint_pos_controller_4_r
-                   joint_pos_controller_5_r
-                   joint_pos_controller_6_r
-                   joint_pos_controller_1_l
-                   joint_pos_controller_2_l
-                   joint_pos_controller_7_l
-                   joint_pos_controller_3_l
-                   joint_pos_controller_4_l
-                   joint_pos_controller_5_l
-                   joint_pos_controller_6_l"/>
-  <arg name="gripper_controllers" default="gripper_effort_controller_r gripper_effort_controller_l"/>
-  <node name="arm_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="$(arg arm_controllers)" ns="/yumi"/>
-  <node name="gripper_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="$(arg gripper_controllers)" ns="/yumi"/>
-
+-->
   <rosparam param="/gazebo_ros_control/pid_gains">
     front_left_wheel:
       p: 1
@@ -86,13 +65,7 @@
                                   -J yumi_joint_7_r -0.71"/>
   <!-- Spawn Ridgeback -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
-        args="-urdf -model ridgeback $(arg yumi_initial_pos) -param robot_description -x 0 -y 0 -z 0.1 -unpause" />
+        args="-urdf -model ridgeback -param robot_description -x 0 -y 0 -z 0.1 -unpause" />
   <!-- Load joint controller configurations from YAML file to parameter server  $(arg yumi_initial_pos) -->
-  <!-- Joint state and robot state publisher calls
-    <node name="yumi_joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
-        <rosparam param="source_list">["/yumi/joint_states", "/yumi/gripper_states"]</rosparam>
-    </node>
-    <node name="yumi_robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
-    <node name="grippers_remapper" pkg="yumi_hw" type="gazebo_grippers_remap.py" />
-    -->
+
 </launch>
