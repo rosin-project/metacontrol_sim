@@ -24,9 +24,6 @@ git clone https://github.com/rosin-project/brass_gazebo_battery.git
 
 git clone https://github.com/marioney/yumi.git
 
-#### Clone Yumi repository
-
-git clone https://github.com/marioney/yumi.git
 
 #### Clone Metacontrol simulation
 
