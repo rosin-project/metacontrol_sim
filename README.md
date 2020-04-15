@@ -27,11 +27,11 @@ git clone https://github.com/marioney/yumi.git
 
 #### Clone Metacontrol simulation
 
-git clone https://github.com/marioney/metacontrol_sim.git
+git clone https://github.com/rosin-project/metacontrol_sim.git
 
 #### Clone metacontrol navigation
 
-git clone https://github.com/marioney/metacontrol_nav.git
+git clone https://github.com/rosin-project/metacontrol_nav.git
 
 
 ### Compile
