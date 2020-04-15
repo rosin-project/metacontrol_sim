@@ -1,0 +1,12 @@
+- git:
+    local-name: metacontrol_sim
+    uri: https://github.com/rosin-project/metacontrol_sim
+- git:
+    local-name: yumi
+    uri: https://github.com/marioney/yumi
+- git:
+    local-name: metacontrol_nav
+    uri: https://github.com/rosin-project/metacontrol_nav
+- git:
+    local-name: brass_gazebo_battery
+    uri: https://github.com/rosin-project/brass_gazebo_battery.git
