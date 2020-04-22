@@ -47,9 +47,17 @@ $ cd ~/metacontrol_ws/src
 $ catkin_make
 $ source devel/setup.bash
 ```
-## Launch simulation and navigation
+## Launch simulation
 
 ```
 $ roslaunch metacontrol_sim ridgeback_yumi_world.launch
+```
+## Launch navigation
+#### Using only odometry
+```
 $ roslaunch metacontrol_nav odom_navigation_standard.launch
+```
+#### Using map based navigation
+```
+$ roslaunch metacontrol_nav amcl_demo_standard.launch use_fake_localization:="true"
 ```
