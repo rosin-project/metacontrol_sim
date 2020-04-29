@@ -10,6 +10,7 @@
     <param name="odom_topic" value="/odom" type="str"/>
     <param name="imu_topic" value="/imu/data" type="str"/>
     <param name="cmd_vel_topic" value="/cmd_vel" type="str"/>
+    <param name="power_load_topic" value="/power_load" type="str"/>
     <!-- frequency to update the controller -->
     <param name="controller_frequency" value="1.0" type="double"/>
     <param name="min_power_load" value="0.2" type="double"/>
