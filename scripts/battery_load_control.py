@@ -4,6 +4,7 @@ import rospy
 from brass_gazebo_battery.srv import SetLoad
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import Imu
+from std_msgs.msg import Float32
 from rostopic import ROSTopicHz
 from threading import Lock
 
@@ -14,6 +15,11 @@ class BatteryLoadController:
 
 
         rospy.init_node('battery_load_controller_node', anonymous=False)
+        controller_frequency = rospy.get_param('~controller_frequency', 5.0)
+        self.min_power_load = rospy.get_param('~min_power_load', 0.2)
+        self.max_power_load = rospy.get_param('~max_power_load', 5.0)
+        controller_frequency = rospy.get_param('~controller_frequency', 5.0)
+        rospy.loginfo("Controller frequency: %s", str(controller_frequency))
         const_linear_vel = rospy.get_param('~const_linear_vel', 1.3)
         const_acceleration = rospy.get_param('~const_acceleration', 0.1)
         const_frequency = rospy.get_param('~const_frequency', 0.04)
@@ -21,11 +27,9 @@ class BatteryLoadController:
         odom_topic_name = rospy.get_param('~odom_topic', '/odom')
         imu_topic_name = rospy.get_param('~imu_topic', '/imu/data')
         self.cmd_vel_topic_name = rospy.get_param('~cmd_vel_topic', '/cmd_vel')
-        controller_frequency = rospy.get_param('~controller_frequency', 5.0)
-        self.min_power_load = rospy.get_param('~min_power_load', 0.2)
-        self.max_power_load = rospy.get_param('~max_power_load', 5.0)
-        controller_frequency = rospy.get_param('~controller_frequency', 5.0)
-        rospy.loginfo("Controller frequency: %s", str(controller_frequency))
+        odom_topic_name = rospy.get_param('~odom_topic', '/odom')
+        power_load_topic_name = rospy.get_param('~power_load_topic', '/power_load')
+
         # Subscribe to Odometry
         rospy.Subscriber(odom_topic_name, Odometry, self.odometry_callback)
         # Subscribe to Imu
@@ -37,6 +41,11 @@ class BatteryLoadController:
         self.ros_topic_hz = ROSTopicHz(window_size=100, filter_expr=None)
         # add Subscriber to /cmd_vel to ROSTopicHz to get frequency of controller
         self.hz_subscriber = rospy.Subscriber(self.cmd_vel_topic_name, rospy.AnyMsg, self.ros_topic_hz.callback_hz, callback_args=self.cmd_vel_topic_name)
+
+        # Add publisher to publish power_load value
+        self.power_load_publisher = rospy.Publisher(power_load_topic_name, Float32, queue_size=1)
+
+
 
         # Initialize variables
 
@@ -133,6 +142,9 @@ class BatteryLoadController:
 
         except rospy.ServiceException, e:
             print "Service call failed: %s"%e
+
+        power_load_msg = Float32(self.power_load)
+        self.power_load_publisher.publish(power_load_msg)
 
         # rospy.loginfo("New Power load: %s", self.power_load)
 
