@@ -1,0 +1,21 @@
+<launch>
+
+
+  <node name="battery_load_control_node" pkg="metacontrol_sim" type="battery_load_control.py" output="screen">
+    <!-- Constant values to control the resulting power load -->
+    <param name="const_linear_vel" value="1.3" type="double"/>
+    <param name="const_acceleration" value="0.1" type="double"/>
+    <param name="const_frequency" value="0.04" type="double"/>
+    <param name="additional_consumption" value="0.0" type="double"/>
+    <param name="odom_topic" value="/odom" type="str"/>
+    <param name="imu_topic" value="/imu/data" type="str"/>
+    <param name="cmd_vel_topic" value="/cmd_vel" type="str"/>
+    <param name="power_load_topic" value="/power_load" type="str"/>
+    <!-- frequency to update the controller -->
+    <param name="controller_frequency" value="1.0" type="double"/>
+    <param name="min_power_load" value="0.2" type="double"/>
+    <param name="max_power_load" value="5.0" type="double"/>
+  </node>
+
+
+</launch>
