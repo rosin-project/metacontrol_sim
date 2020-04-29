@@ -15,7 +15,6 @@ class BatteryLoadController:
 
         rospy.init_node('battery_load_controller_node', anonymous=False)
         const_linear_vel = rospy.get_param('~const_linear_vel', 1.3)
-        const_angular_vel = rospy.get_param('~const_angular_vel', 1.3)
         const_acceleration = rospy.get_param('~const_acceleration', 0.1)
         const_frequency = rospy.get_param('~const_frequency', 0.04)
         additional_consumption = rospy.get_param('~additional_consumption', 0.0)
@@ -43,13 +42,11 @@ class BatteryLoadController:
 
         self.counter = 0
         self.const_linear_vel = const_linear_vel
-        self.const_angular_vel = const_angular_vel
         self.const_acceleration = const_acceleration
         self.const_frequency = const_frequency
         self.additional_consumption = additional_consumption
         self.power_load = init_load
         self.linear_vel_value = 0
-        self.angular_vel_value = 0
         self.frequency_value = 0
         self.acceleration_value = 0
         #self.components = 1.0
