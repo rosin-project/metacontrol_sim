@@ -15,6 +15,7 @@ $ apt-get update
 $ apt-get install ros-melodic-ridgeback-description
 $ apt-get install ros-melodic-hector-xacro-tools
 $ apt-get install ros-melodic-ridgeback-control
+$ apt-get install ros-melodic-ridgeback-gazebo
 ```
 ### Create workspace
 ```
