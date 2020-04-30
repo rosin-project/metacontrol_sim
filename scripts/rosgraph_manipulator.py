@@ -23,7 +23,7 @@ rospack = rospkg.RosPack()
 dict = load(file(rospack.get_path(
     'metacontrol_sim')+'/yaml/goal.yaml', 'r'))
 nav_goal = MoveBaseGoal()
-nav_goal.target_pose = dict['goal']['pose']
+nav_goal.target_pose = dict['pose']
 
 
 def start_node(pkg, node_name, node_exec, ns=''):
