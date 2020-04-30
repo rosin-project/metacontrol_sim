@@ -41,8 +41,10 @@ def kill_node(node_name, ns=''):
     elif state > 0:
         rospy.loginfo("Process terminated without error")
 
-def launch_config(pkg, launchfile, ns=''):
-    command = "roslaunch {0} {1}".format(pkg, launchfile)
+def launch_config(pkg, launchfile, arg, ns=''):
+    rospy.loginfo("launching new configuration...")
+
+    command = "roslaunch {0} {1} profile:={2}".format(pkg, launchfile, arg)
     my_env = os.environ.copy()
     my_env["ROS_NAMESPACE"] = ns
     p = subprocess.Popen(command, shell=True, env=my_env)
@@ -54,6 +56,7 @@ def launch_config(pkg, launchfile, ns=''):
         rospy.loginfo("Process terminated with error")
     elif state > 0:
         rospy.loginfo("Process terminated without error")
+
 
 class RosgraphManipulatorActionServer (object):
 
@@ -74,9 +77,9 @@ class RosgraphManipulatorActionServer (object):
         self._result.result = 1
 
         if (goal.desired_configuration_name == "low_power"):
-            self.executeRequestLowPower()
+            self.executeRequest("safe")
         elif (goal.desired_configuration_name == "standard"):
-            self.executeRequestStandard()
+            self.executeRequest("standard")
         else:
             self._result.result = -1
             self._as.set_aborted(self._result)
@@ -86,15 +89,12 @@ class RosgraphManipulatorActionServer (object):
         self._as.set_succeeded(self._result)
         return
 
-    def executeRequestLowPower(self):
+    def executeRequest(self, configuration="standard"):
         kill_node("/move_base")
-        launch_config("metacontrol_nav", "amcl_demo_safe.launch")
-        rospy.loginfo('launching LOW_POWER configuration (amcl_demo_safe.aunch)')
+        launch_config("metacontrol_nav", "move_base.launch", configuration)
+        rospy.loginfo('launching new configuration')
+        
 
-    def executeRequestStandard(self):
-        kill_node("/move_base")
-        launch_config("metacontrol_nav", "amcl_demo_standard.launch")
-        rospy.loginfo('launching STANDARD configuration (amcl_demo_standard.launch)')
 
     def executeSafeShutdown(self):
         rospy.loginfo('Safe shutdown')
