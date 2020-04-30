@@ -49,16 +49,19 @@
   <!-- Use doc_depend for packages you need only for building documentation: -->
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>actionlib_msgs</build_depend>
   <build_depend>yumi_description</build_depend>
   <build_depend>ridgeback_description</build_depend>
   <build_export_depend>yumi_description</build_export_depend>
   <build_export_depend>ridgeback_description</build_export_depend>
+  <build_export_depend>actionlib_msgs</build_export_depend>
   <exec_depend>yumi_description</exec_depend>
   <exec_depend>ridgeback_description</exec_depend>
   <exec_depend>hector_xacro_tools</exec_depend>
   <exec_depend>ridgeback_control</exec_depend>
   <exec_depend>brass_gazebo_battery</exec_depend>
-
+  <exec_depend>actionlib_msgs</exec_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
