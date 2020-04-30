@@ -13,5 +13,5 @@
     <param name="use_gui" value = "$(arg gui)" />
   </node>
 
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find metacontrol_sim)/config/test_viz.rviz" required="true" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find metacontrol_sim)/rviz/visualize_robot.rviz" required="true" />
 </launch>
