@@ -11,6 +11,20 @@ import os
 
 import dynamic_reconfigure.client
 
+from yaml import load
+# import roslib
+# roslib.load_manifest("rosparam")
+# import rosparam
+import rospkg
+from move_base_msgs.msg import *
+
+rospack = rospkg.RosPack()
+# param = rosparam.load_file(rospack.get_path('metacontrol_sim')+'/yaml/goal.yaml')
+dict = load(file(rospack.get_path(
+    'metacontrol_sim')+'/yaml/goal.yaml', 'r'))
+nav_goal = MoveBaseGoal()
+nav_goal.target_pose = dict['goal']['pose']
+
 
 def start_node(pkg, node_name, node_exec, ns=''):
     command = "rosrun {0} {1}".format(pkg, node_exec)
@@ -71,6 +85,8 @@ class RosgraphManipulatorActionServer (object):
                 auto_start = False)
         self._as.start()
         rospy.loginfo ('RosgraphManipulator Action Server started.')
+        self._movebase_client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
+
 
     def execute_cb(self, goal):
         rospy.loginfo ('Rosgraph Manipulator Action Server received goal %s' % str(goal))
@@ -90,10 +106,18 @@ class RosgraphManipulatorActionServer (object):
         return
 
     def executeRequest(self, configuration="standard"):
+        global nav_goal
+
         kill_node("/move_base")
         launch_config("metacontrol_nav", "move_base.launch", configuration)
         rospy.loginfo('launching new configuration')
-        
+
+        wait = self._movebase_client.wait_for_server(rospy.Duration(6.0))
+        if not wait:
+            rospy.logerr("MoveBase action server not available")
+            return
+        rospy.loginfo("Connected to move_base server and sending Nav Goal")
+        self._movebase_client.send_goal( nav_goal )    
 
 
     def executeSafeShutdown(self):
