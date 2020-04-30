@@ -10,7 +10,6 @@ project(metacontrol_sim)
 find_package(catkin REQUIRED COMPONENTS
   yumi_description
   ridgeback_description
-  actionlib_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -61,17 +60,17 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate actions in the 'action' folder
-add_action_files(
-  FILES
-    MvpReconfiguration.action
-)
+# add_action_files(
+#   FILES
+#   Action1.action
+#   Action2.action
+# )
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(
-  DEPENDENCIES
-    std_msgs  # Or other packages containing msgs
-    actionlib_msgs
-)
+# generate_messages(
+#   DEPENDENCIES
+#   std_msgs  # Or other packages containing msgs
+# )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -106,7 +105,6 @@ catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES metacontrol_sim
 #  CATKIN_DEPENDS [yumi_description, ridgeback_description]
-  CATKIN_DEPENDS actionlib_msgs
 #  DEPENDS system_lib
 )
 

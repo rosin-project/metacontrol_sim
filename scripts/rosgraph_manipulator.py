@@ -4,7 +4,7 @@ import rospy
 
 import actionlib
 
-from metacontrol_sim.msg import *
+from metacontrol_msgs.msg import *
 
 import subprocess
 import os

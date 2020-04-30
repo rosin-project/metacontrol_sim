@@ -10,3 +10,6 @@
 - git:
     local-name: brass_gazebo_battery
     uri: https://github.com/rosin-project/brass_gazebo_battery.git
+- git:
+    local-name: metacontrol_msgs
+    uri: https://github.com/rosin-project/metacontrol_msgs
