@@ -23,7 +23,13 @@ rospack = rospkg.RosPack()
 dict = load(file(rospack.get_path(
     'metacontrol_sim')+'/yaml/goal.yaml', 'r'))
 nav_goal = MoveBaseGoal()
-nav_goal.target_pose = dict['goal']['pose']
+nav_goal.target_pose.header.frame_id = dict['header']['frame_id']
+nav_goal.target_pose.pose.position.x = dict['pose']['position']['x']
+nav_goal.target_pose.pose.position.y = dict['pose']['position']['y']
+nav_goal.target_pose.pose.orientation.x = dict['pose']['orientation']['x']
+nav_goal.target_pose.pose.orientation.y = dict['pose']['orientation']['y']
+nav_goal.target_pose.pose.orientation.z = dict['pose']['orientation']['z']
+nav_goal.target_pose.pose.orientation.w = dict['pose']['orientation']['w']
 
 
 def start_node(pkg, node_name, node_exec, ns=''):
@@ -109,6 +115,7 @@ class RosgraphManipulatorActionServer (object):
         global nav_goal
 
         kill_node("/move_base")
+        rospy.sleep(2)
         launch_config("metacontrol_nav", "move_base.launch", configuration)
         rospy.loginfo('launching new configuration')
 
@@ -117,7 +124,9 @@ class RosgraphManipulatorActionServer (object):
             rospy.logerr("MoveBase action server not available")
             return
         rospy.loginfo("Connected to move_base server and sending Nav Goal")
-        self._movebase_client.send_goal( nav_goal )    
+
+        print nav_goal
+        self._movebase_client.send_goal( nav_goal )
 
 
     def executeSafeShutdown(self):
