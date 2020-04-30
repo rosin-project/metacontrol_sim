@@ -21,13 +21,10 @@
   </include>
 
   <!-- Load Ridgeback's description, controllers, and teleop nodes. -->
-  <include file="$(find metacontrol_sim)/launch/description_ridgeback.launch">
+  <include file="$(find metacontrol_sim)/launch/includes/description_ridgeback.launch.xml">
     <arg name="config" value="$(arg config)" />
   </include>
   <include file="$(find ridgeback_control)/launch/control.launch" />
-
-  <!-- Loads Controller for power load of the battery according to measurements of speed, accel, and frequency -->
-  <include file="$(find metacontrol_sim)/launch/battery_load_control.launch" />
 
   <!--
   <include file="$(find ridgeback_control)/launch/teleop.launch">
