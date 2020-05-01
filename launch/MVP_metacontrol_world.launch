@@ -35,6 +35,8 @@
   <include file="$(find metacontrol_sim)/launch/includes/description_ridgeback.launch.xml">
     <arg name="config" value="$(arg config)" />
   </include>
+
+  <!-- Loads ridgeback controller  -->
   <include file="$(find ridgeback_control)/launch/control.launch" />
 
   <!-- Loads Controller for power load of the battery according to measurements of speed, accel, and frequency -->
@@ -49,9 +51,16 @@
     <arg name="map_file" value="$(arg map_file)" />
   </include>
 
+  <!-- Loads rosgraph_monitor and rosgraph_manipulator nodes -->
+  <include file="$(find metacontrol_sim)/launch/includes/rosgraph_nodes.launch.xml" />
+
   <!--- Run Move Base -->
   <include file="$(find metacontrol_nav)/launch/include/move_base.launch" >
   </include>
+
+  <!-- Node to send initial goal to move base -->
+  <node name="send_initial_goal_node" pkg="metacontrol_sim" type="send_goal_from_yaml.py" output="screen">
+  </node>
 
   <!--
   <include file="$(find ridgeback_control)/launch/teleop.launch">

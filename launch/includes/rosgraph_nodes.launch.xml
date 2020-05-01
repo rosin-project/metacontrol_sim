@@ -1,0 +1,13 @@
+<launch>
+
+
+  <node name="rosgraph_manipulator_node" pkg="metacontrol_sim" type="rosgraph_manipulator.py" output="screen">
+  </node>
+
+
+
+  <node name="rosgraph_monitor_node" pkg="rosgraph_monitor" type="monitor" output="screen">
+  </node>
+
+
+</launch>
