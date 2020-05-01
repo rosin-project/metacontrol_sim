@@ -98,9 +98,9 @@ class RosgraphManipulatorActionServer (object):
         rospy.loginfo ('Rosgraph Manipulator Action Server received goal %s' % str(goal))
         self._result.result = 1
 
-        if (goal.desired_configuration_name == "low_power"):
+        if (goal.desired_configuration_name == "fd_navigate_safe"):
             self.executeRequest("safe")
-        elif (goal.desired_configuration_name == "standard"):
+        elif (goal.desired_configuration_name == "fd_standard"):
             self.executeRequest("standard")
         else:
             self._result.result = -1
