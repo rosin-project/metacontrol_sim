@@ -65,20 +65,6 @@ class BatteryLoadController:
         rospy.wait_for_service('/battery_demo_model/set_power_load')
         rospy.loginfo("battery_load_controller_node Initialization completed")
 
-
-    def add_consumption_callback(self, config, level):
-        rospy.loginfo("""Reconfigure Request: {additional_consumption}""".format(**config))
-        return config
-
-        # Set acceleration_value if it's larger than previuos value
-        if imu_data.linear_acceleration.x > self.acceleration_value:
-            with self.lock:
-                self.acceleration_value = imu_data.linear_acceleration.x
-
-        # print self.acceleration_value
-        # print acceleration_y
-
-
     def imu_callback(self, imu_data):
 
         # Set acceleration_value if it's larger than previuos value
@@ -158,3 +144,4 @@ if __name__ == '__main__':
     except rospy.ROSInterruptException:
         pass
     rospy.spin()
+    pass
