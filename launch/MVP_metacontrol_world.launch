@@ -54,6 +54,9 @@
   <!-- Loads rosgraph_monitor and rosgraph_manipulator nodes -->
   <include file="$(find metacontrol_sim)/launch/includes/rosgraph_nodes.launch.xml" />
 
+  <!-- Loads laser filter node -->
+  <include file="$(find metacontrol_sim)/launch/includes/laser_filters.launch" />
+
   <!--- Run Move Base -->
   <include file="$(find metacontrol_nav)/launch/include/move_base.launch" >
   </include>
