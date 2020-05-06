@@ -3,7 +3,7 @@
     <rosparam command="load" file="$(find metacontrol_sim)/yaml/laser_filter_config.yaml" />
     <remap from="scan" to="/front/scan" />
   </node>
-  <node pkg="metacontrol_sim" type="safety_distance_publisher.py" name="safety_distance_publisher_node" output="screen">
+  <node pkg="metacontrol_sim" type="safety_distance_publisher.py" name="safety_distance_publisher_node">
     <rosparam command="load" file="$(find metacontrol_sim)/yaml/laser_filter_config.yaml" />
     <remap from="scan" to="/front/scan" />
   </node>
