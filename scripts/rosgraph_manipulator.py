@@ -4,7 +4,8 @@ import rospy
 
 import actionlib
 
-from metacontrol_msgs.msg import *
+from metacontrol_msgs.msg import MvpReconfigurationResult
+from metacontrol_msgs.msg import MvpReconfigurationAction
 
 import subprocess
 import os
@@ -16,7 +17,8 @@ from yaml import load
 # roslib.load_manifest("rosparam")
 # import rosparam
 import rospkg
-from move_base_msgs.msg import *
+from move_base_msgs.msg import MoveBaseAction
+from move_base_msgs.msg import MoveBaseGoal
 
 rospack = rospkg.RosPack()
 # param = rosparam.load_file(rospack.get_path('metacontrol_sim')+'/yaml/goal.yaml')
@@ -83,6 +85,8 @@ class RosgraphManipulatorActionServer (object):
     _result = MvpReconfigurationResult()
 
     def __init__(self, name):
+        
+        rospy.init_node('rosgraph_manipulator_action_server_node')
         self._action_name = name
         self._as = actionlib.SimpleActionServer(
                 self._action_name,
@@ -134,6 +138,9 @@ class RosgraphManipulatorActionServer (object):
         # TODO: complete how to safely shutdown the entire system
 
 if __name__ == '__main__':
-    rospy.init_node('rosgraph_manipulator_action_server')
-    server = RosgraphManipulatorActionServer(rospy.get_name())
+    try:
+        RosgraphManipulatorActionServer('rosgraph_manipulator_action_server')
+    except rospy.ROSInterruptException:
+        pass
     rospy.spin()
+    pass
