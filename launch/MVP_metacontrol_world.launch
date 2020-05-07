@@ -64,6 +64,11 @@
   <!-- Node to send initial goal to move base -->
   <node name="send_initial_goal_node" pkg="metacontrol_sim" type="send_goal_from_yaml.py" output="screen">
   </node>
+  
+  <!-- Node to activate the observer -->
+  <node name="activate_observer_node" pkg="metacontrol_sim" type="activate_observer.py" output="screen">
+  </node>
+
 
   <!--
   <include file="$(find ridgeback_control)/launch/teleop.launch">
