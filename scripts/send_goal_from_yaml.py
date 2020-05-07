@@ -12,9 +12,11 @@ from rospkg import RosPack
 from move_base_msgs.msg import MoveBaseGoal
 from move_base_msgs.msg import MoveBaseAction
 
+
 if __name__ == '__main__':
-    rospy.init_node('rosgraph_manipulator_action_server')
+    rospy.init_node('send_goal_from_yaml_node')
     rospack = RosPack()
+
     # param = rosparam.load_file(rospack.get_path('metacontrol_sim')+'/yaml/goal.yaml')
     dict = load(file(rospack.get_path(
         'metacontrol_sim')+'/yaml/goal.yaml', 'r'))
@@ -29,7 +31,6 @@ if __name__ == '__main__':
 
     # Create SimpleActionClient
     movebase_client = SimpleActionClient('move_base', MoveBaseAction)
-
     # Wait for server to come up
     # I put it in a for to make sure it finds the action server
     # it may take a while to load all nodes
@@ -45,4 +46,4 @@ if __name__ == '__main__':
 
     print nav_goal
     movebase_client.send_goal( nav_goal )
-    rospy.loginfo('Safe shutdown')
+    rospy.loginfo('[send_goal_from_yaml_node] Safe shutdown')
