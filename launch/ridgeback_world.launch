@@ -7,7 +7,7 @@
 
   <!-- Configuration of Ridgeback which you would like to simulate.
        See ridgeback_description for details. -->
-  <arg name="config" default="$(optenv RIDGEBACK_CONFIG base)" />
+  <arg name="config" default="$(optenv RIDGEBACK_CONFIG base_depth)" />
 
   <!-- Launch Gazebo with the specified world -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
