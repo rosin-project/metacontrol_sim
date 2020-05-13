@@ -2,7 +2,7 @@
 
   <arg name="rviz" default="true" />
   <arg name="use_sim_time" default="true" />
-  <arg name="gui" default="true" />
+  <arg name="gui" default="false" />
   <arg name="headless" default="false" />
   <arg name="world_name" default="$(find metacontrol_sim)/worlds/factory.world" />
 
@@ -30,10 +30,10 @@
     <arg name="world_name" value="$(arg world_name)" />
     <arg name="paused" value="true"/>
   </include>
-  
+
   <!-- Spawn the factory floor into Gazebo -->
   <include file="$(find metacontrol_sim)/launch/includes/spawn_factory_floor.launch.xml"/>
-  
+
   <!-- Load Ridgeback's description, controllers, and teleop nodes. -->
   <include file="$(find metacontrol_sim)/launch/includes/description_ridgeback.launch.xml">
     <arg name="config" value="$(arg config)" />
@@ -67,7 +67,7 @@
   <!-- Node to send initial goal to move base -->
   <node name="send_initial_goal_node" pkg="metacontrol_sim" type="send_goal_from_yaml.py" output="screen">
   </node>
-  
+
   <!-- Node to activate the observer -->
   <node name="activate_observer_node" pkg="metacontrol_sim" type="activate_observer.py" output="screen">
   </node>
