@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="gui" default="true" />
-  <!-- <arg name="config" default="$(optenv RIDGEBACK_CONFIG empty)" /> -->
+  <arg name="config" default="$(optenv RIDGEBACK_CONFIG base_depth)" />
 
-  <param name="robot_description" command="$(find xacro)/xacro $(find metacontrol_sim)/urdf/ridgeback/ridgeback.xacro " />
+    <param name="robot_description" command="$(find ridgeback_description)/scripts/env_run
+                                          $(find metacontrol_sim)/urdf/ridgeback/configs/$(arg config)
+                                          $(find xacro)/xacro $(find metacontrol_sim)/urdf/ridgeback/ridgeback.xacro " />
 
   <!-- <param name="robot_description" command="$(find xacro)/xacro '$(find metacontrol_sim)/urdf/roboto.xacro'" /> -->
 
