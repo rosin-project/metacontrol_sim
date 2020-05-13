@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="workcell" value="workcell_"/>
+  <arg name="workcell_parent_name" value="world_interface"/>
+  
+  <!-- Parameters and nodes in the global namespace. -->
+  <param name="$(arg workcell)description"
+    command="$(find xacro)/xacro '$(find metacontrol_sim)/urdf/workcell/workcell.xacro' workcell_parent:=$(arg workcell_parent_name)"/>
+
+  <node name="$(arg workcell)spawner" pkg="gazebo_ros" type="spawn_model" output="screen"
+    args="-urdf -model $(arg workcell) -param $(arg workcell)description"/>
+
+</launch>
