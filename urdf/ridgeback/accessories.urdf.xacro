@@ -11,10 +11,16 @@
   -->
   <xacro:macro name = "ridgeback_accesories">
     <xacro:property name="PI" value="3.1415926535897931" />
+    <xacro:property name="material_dark_grey">
+      <material name="dark_grey">
+        <color rgba="0.3 0.3 0.3 1"/>
+      </material>
+    </xacro:property>
 
-    <xacro:include filename="$(find ridgeback_description)/urdf/accessories/sick_lms1xx_mount.urdf.xacro" />
-    <xacro:include filename="$(find ridgeback_description)/urdf/accessories/sick_s300_mount.urdf.xacro" />
-    <xacro:include filename="$(find ridgeback_description)/urdf/accessories/hokuyo_ust-10lx_mount.urdf.xacro" />
+    <xacro:include filename="$(find metacontrol_sim)/urdf/ridgeback/accessories/sick_lms1xx_mount.urdf.xacro" />
+    <xacro:include filename="$(find metacontrol_sim)/urdf/ridgeback/accessories/sick_s300_mount.urdf.xacro" />
+    <xacro:include filename="$(find metacontrol_sim)/urdf/ridgeback/accessories/hokuyo_ust-10lx_mount.urdf.xacro" />
+    <xacro:include filename="$(find metacontrol_sim)/urdf/ridgeback/accessories/r200.urdf.xacro" />
 
     <!-- If enabled, generate the front HOKUYO UST-10LX LASER payload. -->
     <xacro:if value="$(optenv RIDGEBACK_FRONT_HOKUYO_LASER 0)">
@@ -59,6 +65,10 @@
       <xacro:sick_s300_mount prefix="rear"
                                topic="rear/scan"
                                location="-1" />
+    </xacro:if>
+    <!-- If enabled, generate the front R200 depth sensor. -->
+    <xacro:if value="$(optenv RIDGEBACK_R200_DEPTH_SENSOR 0)">
+      <xacro:sensor_r200 parent="chassis_link"/>
     </xacro:if>
 
     <!-- If enabled, generate the optional Microstrain 3DM-GX2/3 IMU payload. -->
