@@ -39,6 +39,9 @@
       <elevation>0</elevation>
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
 
     <model name="battery_demo_model">
       <pose>0 0 0 0 0 0</pose>
