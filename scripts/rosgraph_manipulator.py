@@ -97,15 +97,24 @@ class RosgraphManipulatorActionServer (object):
         rospy.loginfo ('RosgraphManipulator Action Server started.')
         self._movebase_client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
 
-
+    # TODO hardcoded configuration names
+    # 
+    # FD NAME                   |   LAUNCHFILE          |   ARG "profile"
+    # -------------------------------------------------------------------
+    # fd_navigate_safe          |   move_base.launch    |   safe
+    # fd_navigate_standard      |   move_base.launch    |   standard
+    # fd_navigate_fast          |   move_base.launch    |   fast
+    # 
     def execute_cb(self, goal):
         rospy.loginfo ('Rosgraph Manipulator Action Server received goal %s' % str(goal))
         self._result.result = 1
 
         if (goal.desired_configuration_name == "fd_navigate_safe"):
             self.executeRequest("safe")
-        elif (goal.desired_configuration_name == "fd_standard"):
+        elif (goal.desired_configuration_name == "fd_navigate_standard"):
             self.executeRequest("standard")
+        elif (goal.desired_configuration_name == "fd_navigate_fast"):
+            self.executeRequest("fast")
         else:
             self._result.result = -1
             self._as.set_aborted(self._result)
@@ -115,10 +124,14 @@ class RosgraphManipulatorActionServer (object):
         self._as.set_succeeded(self._result)
         return
 
+    # TODO now we have hardcoded :
+    # - sequence of adaptation actions to switch configurations
+    # - launchfile used for navigation
+    # - action to send navigation goal AND value of the navigation goal
     def executeRequest(self, configuration="standard"):
         global nav_goal
 
-        kill_node("/move_base")
+        kill_node("/move_base") # TODO hardcoded
         rospy.sleep(2)
         launch_config("metacontrol_nav", "move_base.launch", configuration)
         rospy.loginfo('launching new configuration')
@@ -130,7 +143,7 @@ class RosgraphManipulatorActionServer (object):
         rospy.loginfo("Connected to move_base server and sending Nav Goal")
 
         print nav_goal
-        self._movebase_client.send_goal( nav_goal )
+        self._movebase_client.send_goal( nav_goal ) # TODO hardcoded
 
 
     def executeSafeShutdown(self):
