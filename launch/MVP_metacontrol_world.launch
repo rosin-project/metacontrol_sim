@@ -16,6 +16,9 @@
   <!-- Map file -->
   <arg name="map_file" default="$(find metacontrol_nav)/maps/factory.yaml"/>
 
+  <!-- Profile for navigation: fast / standard / safe -->
+  <arg name="nav_profile" default="safe"/>
+
   <!-- Configuration of Ridgeback which you would like to simulate.
        See ridgeback_description for details. -->
   <arg name="config" default="$(optenv RIDGEBACK_CONFIG base)" />
@@ -62,6 +65,7 @@
 
   <!--- Run Move Base -->
   <include file="$(find metacontrol_nav)/launch/include/move_base.launch" >
+    <arg name="profile"  value="$(arg nav_profile)"/>
   </include>
 
   <!-- Node to send initial goal to move base -->
