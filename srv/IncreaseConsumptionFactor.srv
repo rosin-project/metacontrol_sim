@@ -1,0 +1,3 @@
+float64 increase_consumption	# Request message: factor to multiply battery consumption
+---
+bool success			# Response message: Success or failure of conversion.
