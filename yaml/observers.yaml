@@ -1,1 +1,4 @@
-name: 'QualityObserver'
+safety:
+  name: 'SafetyQualityObserver'
+energy:
+  name: 'EnergyQualityObserver'
