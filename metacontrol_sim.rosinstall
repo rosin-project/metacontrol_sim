@@ -22,3 +22,6 @@
     local-name: ros_graph_parser
     uri: https://github.com/ipa-nhg/ros_graph_parser
     version: SoSymPaper
+- git:
+    local-name: metacontrol_move_base_configurations
+    uri: https://github.com/rosin-project/metacontrol_move_base_configurations
