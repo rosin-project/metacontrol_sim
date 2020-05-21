@@ -66,7 +66,8 @@ def kill_node(node_name, ns=''):
 def launch_config(pkg, launchfile, arg, ns=''):
     rospy.loginfo("launching new configuration...")
 
-    command = "roslaunch {0} {1} profile:={2}".format(pkg, launchfile, arg)
+    #command = "roslaunch {0} {1} profile:={2}".format(pkg, launchfile, arg)
+    command = "roslaunch {0} {1}".format(pkg, launchfile)
     my_env = os.environ.copy()
     my_env["ROS_NAMESPACE"] = ns
     p = subprocess.Popen(command, shell=True, env=my_env)
@@ -109,12 +110,15 @@ class RosgraphManipulatorActionServer (object):
         rospy.loginfo ('Rosgraph Manipulator Action Server received goal %s' % str(goal))
         self._result.result = 1
 
-        if (goal.desired_configuration_name == "fd_navigate_safe"):
-            self.executeRequest("safe")
-        elif (goal.desired_configuration_name == "fd_navigate_standard"):
-            self.executeRequest("standard")
-        elif (goal.desired_configuration_name == "fd_navigate_fast"):
-            self.executeRequest("fast")
+        #if (goal.desired_configuration_name == "fd_navigate_safe"):
+        #    self.executeRequest("safe")
+        #elif (goal.desired_configuration_name == "fd_navigate_standard"):
+        #    self.executeRequest("standard")
+        #elif (goal.desired_configuration_name == "fd_navigate_fast"):
+        #    self.executeRequest("fast")
+        configurations_list = rospy.get_param('rosgraph_manipulator/configs')
+        if (goal.desired_configuration_name in configurations_list):
+            self.executeRequest(goal.desired_configuration_name)
         else:
             self._result.result = -1
             self._as.set_aborted(self._result)
@@ -133,7 +137,7 @@ class RosgraphManipulatorActionServer (object):
 
         kill_node("/move_base") # TODO hardcoded
         rospy.sleep(2)
-        launch_config("metacontrol_nav", "move_base.launch", configuration)
+        launch_config(configuration, configuration+".launch", configuration)
         rospy.loginfo('launching new configuration')
 
         wait = self._movebase_client.wait_for_server(rospy.Duration(6.0))
