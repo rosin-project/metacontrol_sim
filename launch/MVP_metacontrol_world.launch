@@ -100,6 +100,8 @@
       i: 0.1
       d: 0
   </rosparam>
+  <!-- Do NOT publish from node /ekf_localization in /diagnostics topic -->
+  <rosparam param="/ekf_localization/print_diagnostics">false</rosparam>
 
   <!-- Spawn Ridgeback -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
