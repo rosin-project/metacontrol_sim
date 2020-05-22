@@ -16,8 +16,11 @@
   <!-- Map file -->
   <arg name="map_file" default="$(find metacontrol_nav)/maps/factory.yaml"/>
 
-  <!-- Profile for navigation: fast / standard / safe -->
-  <arg name="nav_profile" default="safe"/>
+<!-- Profile for navigation: -->
+<!-- fast / standard / safe: launches one of the baseline configurations -->
+<!-- fx_vx_rx : launches one of the metaconrol configurations -->
+
+  <arg name="nav_profile" default="f1_v1_r1"/>
 
   <!-- Configuration of Ridgeback which you would like to simulate.
        See ridgeback_description for details. -->
@@ -64,7 +67,7 @@
   <include file="$(find metacontrol_sim)/launch/includes/laser_filters.launch" />
 
   <!--- Run Move Base -->
-  <include file="$(find metacontrol_nav)/launch/include/move_base.launch" >
+  <include file="$(find metacontrol_nav)/launch/include/move_base_metacontrol.launch" >
     <arg name="profile"  value="$(arg nav_profile)"/>
   </include>
 
