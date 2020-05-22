@@ -2,3 +2,5 @@ safety:
   name: 'SafetyQualityObserver'
 energy:
   name: 'EnergyQualityObserver'
+error:
+  name: 'ObjetiveErrorObserver'
