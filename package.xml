@@ -58,7 +58,9 @@
   <exec_depend>hector_xacro_tools</exec_depend>
   <exec_depend>ridgeback_control</exec_depend>
   <exec_depend>brass_gazebo_battery</exec_depend>
-
+  <exec_depend>map_server</exec_depend>
+  <exec_depend>fake_localization</exec_depend>
+  <exec_depend>laser_filters</exec_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
