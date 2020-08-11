@@ -59,6 +59,7 @@
   <exec_depend>ridgeback_description</exec_depend>
   <exec_depend>hector_xacro_tools</exec_depend>
   <exec_depend>ridgeback_control</exec_depend>
+  <exec_depend>ridgeback_gazebo</exec_depend>
   <exec_depend>brass_gazebo_battery</exec_depend>
   <exec_depend>metacontrol_msgs</exec_depend>
   <exec_depend>std_msgs</exec_depend>
