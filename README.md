@@ -8,7 +8,6 @@ $ wstool init src https://raw.githubusercontent.com/rosin-project/metacontrol_si
 $ rosdep install --from-paths ./src -y -i -r --skip-keys="abb_rws_interface"
 ```
 
-
 ## Compile
 
 ```
