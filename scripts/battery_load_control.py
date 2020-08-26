@@ -7,7 +7,7 @@ from sensor_msgs.msg import Imu
 from std_msgs.msg import Float32
 from rostopic import ROSTopicHz
 from threading import Lock
-
+from metacontrol_sim.srv import IncreaseConsumptionFactor, IncreaseConsumptionFactorRequest, IncreaseConsumptionFactorResponse
 
 class BatteryLoadController:
 
@@ -46,7 +46,6 @@ class BatteryLoadController:
         self.power_load_publisher = rospy.Publisher(power_load_topic_name, Float32, queue_size=1)
 
 
-
         # Initialize variables
 
         self.counter = 0
@@ -54,6 +53,7 @@ class BatteryLoadController:
         self.const_acceleration = const_acceleration
         self.const_frequency = const_frequency
         self.additional_consumption = additional_consumption
+        self.increase_consumption_factor = 1.0
         self.power_load = init_load
         self.linear_vel_value = 0
         self.frequency_value = 0
@@ -63,21 +63,27 @@ class BatteryLoadController:
         # First wait for the service to become available.
         rospy.loginfo("Waiting for service...")
         rospy.wait_for_service('/battery_demo_model/set_power_load')
+
+        # Create service to increase power compsumption
+        # Create a ROS service type.
+        service = rospy.Service('/increase_power_consumption', IncreaseConsumptionFactor, self.process_service_request)
+        # Log message about service availability.
+        rospy.loginfo("Increase power conspumtion service is now available.")
         rospy.loginfo("battery_load_controller_node Initialization completed")
 
-
-    def add_consumption_callback(self, config, level):
-        rospy.loginfo("""Reconfigure Request: {additional_consumption}""".format(**config))
-        return config
-
-        # Set acceleration_value if it's larger than previuos value
-        if imu_data.linear_acceleration.x > self.acceleration_value:
-            with self.lock:
-                self.acceleration_value = imu_data.linear_acceleration.x
-
-        # print self.acceleration_value
-        # print acceleration_y
-
+    # Icrease compsumtion Service callback function.
+    def process_service_request(self, req):
+        # Instantiate the response message object.
+        res = IncreaseConsumptionFactorResponse()
+        # Perform sanity check. Allow only positive real numbers.
+        # Compose the response message accordingly.
+        if(req.increase_consumption < 0):
+            res.success = False
+        else:
+            self.increase_consumption_factor = req.increase_consumption
+            res.success = True
+        #Return the response message.
+        return res
 
     def imu_callback(self, imu_data):
 
@@ -119,6 +125,11 @@ class BatteryLoadController:
             self.frequency_value * self.const_frequency + \
             self.additional_consumption
 
+
+        # Apply increase power conself.angular_vel_value * self.const_angular_vel + \
+
+        self.power_load = self.power_load * self.increase_consumption_factor
+
         # Set minimum power load
         if self.power_load < self.min_power_load:
             self.power_load = self.min_power_load
@@ -158,3 +169,4 @@ if __name__ == '__main__':
     except rospy.ROSInterruptException:
         pass
     rospy.spin()
+    pass

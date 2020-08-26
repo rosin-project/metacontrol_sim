@@ -1,0 +1,114 @@
+<launch>
+
+  <arg name="rviz" default="true" />
+  <arg name="use_sim_time" default="true" />
+  <arg name="gui" default="false" />
+  <arg name="headless" default="false" />
+  <arg name="world_name" default="$(find metacontrol_sim)/worlds/factory.world" />
+
+  ## Parameters for localization and map server
+  <!-- Use fake localization -->
+  <arg name="use_fake_localization" default="true"/>
+  <!-- Initial pose -->
+  <arg name="initial_pose_x" default="0.0" />
+  <arg name="initial_pose_y" default="0.0" />
+  <arg name="initial_pose_a" default="0.0" />
+  <!-- Map file -->
+  <arg name="map_file" default="$(find metacontrol_nav)/maps/factory.yaml"/>
+
+<!-- Profile for navigation: -->
+<!-- fast / standard / safe: launches one of the baseline configurations -->
+<!-- fx_vx_rx : launches one of the metaconrol configurations -->
+
+  <arg name="nav_profile" default="f1_v1_r1"/>
+
+  <!-- Configuration of Ridgeback which you would like to simulate.
+       See ridgeback_description for details. -->
+  <arg name="config" default="$(optenv RIDGEBACK_CONFIG base)" />
+
+  <!-- Launch Gazebo with the specified world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+
+    <arg name="debug" value="0" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="use_sim_time" value="$(arg use_sim_time)" />
+    <arg name="headless" value="$(arg headless)" />
+    <arg name="world_name" value="$(arg world_name)" />
+    <arg name="paused" value="true"/>
+  </include>
+
+  <!-- Spawn the factory floor into Gazebo -->
+  <include file="$(find metacontrol_sim)/launch/includes/spawn_factory_floor.launch.xml"/>
+
+  <!-- Load Ridgeback's description, controllers, and teleop nodes. -->
+  <include file="$(find metacontrol_sim)/launch/includes/description_ridgeback.launch.xml">
+    <arg name="config" value="$(arg config)" />
+  </include>
+
+  <!-- Loads ridgeback controller  -->
+  <include file="$(find ridgeback_control)/launch/control.launch" />
+
+  <!-- Loads Controller for power load of the battery according to measurements of speed, accel, and frequency -->
+  <include file="$(find metacontrol_sim)/launch/includes/battery_load_control.launch.xml" />
+
+  <!-- Loads map server and localization (amcl or fake_localization) -->
+  <include file="$(find metacontrol_sim)/launch/includes/map_localization.launch.xml" >
+    <arg name="use_fake_localization" value="$(arg use_fake_localization)" />
+    <arg name="initial_pose_x" value="$(arg initial_pose_x)" />
+    <arg name="initial_pose_y" value="$(arg initial_pose_y)" />
+    <arg name="initial_pose_a" value="$(arg initial_pose_a)" />
+    <arg name="map_file" value="$(arg map_file)" />
+  </include>
+
+  <!-- Loads rosgraph_monitor and rosgraph_manipulator nodes -->
+  <include file="$(find metacontrol_sim)/launch/includes/rosgraph_nodes.launch.xml" />
+
+  <!-- Loads laser filter node -->
+  <include file="$(find metacontrol_sim)/launch/includes/laser_filters.launch" />
+
+  <!--- Run Move Base -->
+  <include file="$(find metacontrol_nav)/launch/include/move_base_metacontrol.launch" >
+    <arg name="profile"  value="$(arg nav_profile)"/>
+  </include>
+
+  <!-- Node to send initial goal to move base -->
+  <node name="send_initial_goal_node" pkg="metacontrol_sim" type="send_goal_from_yaml.py" output="screen">
+  </node>
+
+  <!-- Node to activate the observer -->
+  <node name="activate_observer_node" pkg="metacontrol_sim" type="activate_observer.py" output="screen">
+  </node>
+
+
+  <!--
+  <include file="$(find ridgeback_control)/launch/teleop.launch">
+    <arg name="joystick" value="false"/>
+  </include>
+-->
+  <rosparam param="/gazebo_ros_control/pid_gains">
+    front_left_wheel:
+      p: 1
+      i: 0.1
+      d: 0
+    front_right_wheel:
+      p: 1
+      i: 0.1
+      d: 0
+    rear_left_wheel:
+      p: 1
+      i: 0.1
+      d: 0
+    rear_right_wheel:
+      p: 1
+      i: 0.1
+      d: 0
+  </rosparam>
+  <!-- Do NOT publish from node /ekf_localization in /diagnostics topic -->
+  <rosparam param="/ekf_localization/print_diagnostics">false</rosparam>
+
+  <!-- Spawn Ridgeback -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
+        args="-urdf -model ridgeback -param robot_description -x $(arg initial_pose_x) -y $(arg initial_pose_y) -z 0.1 -Y $(arg initial_pose_a) -unpause" />
+  <node if="$(arg rviz)" type="rviz" name="rviz" pkg="rviz" args="-d $(find metacontrol_sim)/rviz/test_viz.rviz" />
+
+</launch>

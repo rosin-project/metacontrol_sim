@@ -1,0 +1,33 @@
+<launch>
+
+  <!-- Use fake localization -->
+  <arg name="use_fake_localization" default="true"/>
+  <!-- Define initial pose -->
+  <arg name="initial_pose_x" default="0.0" />
+  <arg name="initial_pose_y" default="0.0" />
+  <arg name="initial_pose_a" default="0.0" />
+  <!-- Define map file -->
+  <arg name="map_file" default="$(find metacontrol_nav)/maps/ridgeback_race.yaml"/>
+
+  <!-- Run the map server -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
+  <!--- Run AMCL -->
+  <group unless="$(arg use_fake_localization)">
+    <include file="$(find metacontrol_nav)/launch/include/amcl.launch" >
+      <arg name="initial_pose_x" value="$(arg initial_pose_x)" />
+      <arg name="initial_pose_y" value="$(arg initial_pose_y)" />
+      <arg name="initial_pose_a" value="$(arg initial_pose_a)" />
+    </include>
+  </group>
+
+  <!-- Fake localization -->
+  <group if="$(arg use_fake_localization)">
+    <node pkg="fake_localization" type="fake_localization" name="fake_localization" output="screen" required="true">
+      <remap from="base_pose_ground_truth" to="/ground_truth/state" />
+      <param name="global_frame_id" value="map" />
+      <param name="base_frame_id" value="base_link" />
+    </node>
+  </group>
+
+  </launch>

@@ -21,7 +21,7 @@
   </include>
 
   <!-- Load Ridgeback's description, controllers, and teleop nodes. -->
-  <include file="$(find metacontrol_sim)/launch/description_ridgeback_yumi.launch">
+  <include file="$(find metacontrol_sim)/launch/include/description_ridgeback_yumi.launch.xml">
     <arg name="config" value="$(arg config)" />
   </include>
   <include file="$(find ridgeback_control)/launch/control.launch" />
