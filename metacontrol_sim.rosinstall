@@ -1,7 +1,6 @@
 - git:
     local-name: metacontrol_sim
     uri: https://github.com/rosin-project/metacontrol_sim
-    version: MVP_world
 - git:
     local-name: yumi
     uri: https://github.com/marioney/yumi
