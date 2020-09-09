@@ -4,7 +4,7 @@
 ```
 $ mkdir -p ~/metacontrol_ws/src
 $ cd ~/metacontrol_ws
-$ wstool init src https://raw.githubusercontent.com/rosin-project/metacontrol_sim/MVP_world/metacontrol_sim.rosinstall
+$ wstool init src https://raw.githubusercontent.com/rosin-project/metacontrol_sim/master/metacontrol_sim.rosinstall
 $ rosdep install --from-paths ./src -y -i -r --skip-keys="abb_rws_interface"
 ```
 
