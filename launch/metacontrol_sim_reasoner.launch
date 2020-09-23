@@ -23,7 +23,7 @@
 <!-- fast / standard / safe: launches one of the baseline configurations -->
 <!-- fx_vx_rx : launches one of the metaconrol configurations -->
 
-  <arg name="nav_profile" default="f1_v2_r2"/>
+  <arg name="nav_profile" default="f3_v3_r1"/>
 
   <!-- Configuration of Ridgeback which you would like to simulate.
        See ridgeback_description for details. -->
@@ -114,16 +114,13 @@
         args="-urdf -model ridgeback -param robot_description -x $(arg initial_pose_x) -y $(arg initial_pose_y) -z 0.1 -Y $(arg initial_pose_a) -unpause" />
   <node if="$(arg rviz)" type="rviz" name="rviz" pkg="rviz" args="-d $(find metacontrol_sim)/rviz/test_viz.rviz" />
 
-
-  <!-- Parameters for reasoner -->
-  <arg name="tomasys" default="$(find mc_mdl_tomasys)/tomasys.owl"/>
-  <param name="/desired_configuration" type="string" value="$(arg nav_profile)"/>
-  <param name="/nfr_energy" value="$(arg nfr_energy)"/>
-  <param name="/nfr_safety" value="$(arg nfr_safety)"/>
-
   <!-- Launches mros1 reasoner -->
   <include file="$(find mros1_reasoner)/launch/run.launch">
     <arg name="model" value="$(find mros1_reasoner)/scripts/kb.owl"/>
+    <arg name="tomasys" default="$(find mc_mdl_tomasys)/tomasys.owl"/>
+    <arg name="desired_configuration" value="$(arg nav_profile)"/>
+    <arg name="nfr_energy" value="$(arg nfr_energy)"/>
+    <arg name="nfr_safety" value="$(arg nfr_safety)"/>
   </include>
 
 
