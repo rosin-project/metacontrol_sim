@@ -116,13 +116,14 @@
 
 
   <!-- Parameters for reasoner -->
+  <arg name="tomasys" default="$(find mc_mdl_tomasys)/tomasys.owl"/>
   <param name="/desired_configuration" type="string" value="$(arg nav_profile)"/>
   <param name="/nfr_energy" value="$(arg nfr_energy)"/>
   <param name="/nfr_safety" value="$(arg nfr_safety)"/>
 
   <!-- Launches mros1 reasoner -->
   <include file="$(find mros1_reasoner)/launch/run.launch">
-    <arg name="onto" value="kb.owl"/>
+    <arg name="model" value="$(find mros1_reasoner)/scripts/kb.owl"/>
   </include>
 
 
