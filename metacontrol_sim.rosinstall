@@ -28,7 +28,7 @@
 - git:
     local-name: mros1_reasoner
     uri: https://github.com/tud-cor/mc_mros_reasoner.git
-    version: master
+    version: split_mros1_reasoner
 - git:
     local-name: metacontrol_msgs
     uri: https://github.com/rosin-project/metacontrol_msgs
