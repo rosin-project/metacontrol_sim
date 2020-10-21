@@ -9,7 +9,6 @@ project(metacontrol_sim)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   message_generation
-  yumi_description
   ridgeback_description
   std_msgs
 )
