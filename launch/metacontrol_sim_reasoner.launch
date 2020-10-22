@@ -5,6 +5,8 @@
   <arg name="gui" default="false" />
   <arg name="headless" default="false" />
   <arg name="world_name" default="$(find metacontrol_sim)/worlds/factory.world" />
+  <arg name="current_goal_file" default="$(find metacontrol_sim)/yaml/goal.yaml" />
+
 
   ## Parameters for localization and map server
   <!-- Use fake localization -->
@@ -74,7 +76,10 @@
     <arg name="profile"  value="$(arg nav_profile)"/>
   </include>
 
-  <!-- Node to send initial goal to move base -->
+  <!-- Send initial goal to move base -->
+  <!-- Set parameter to define the yaml file with current goal -->
+  <param name="/current_goal_yaml_file" type="string" value="$(arg current_goal_file)"/>
+  
   <node name="send_initial_goal_node" pkg="metacontrol_sim" type="send_goal_from_yaml.py" output="screen">
   </node>
 

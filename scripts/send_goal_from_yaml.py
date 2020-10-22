@@ -18,8 +18,9 @@ if __name__ == '__main__':
     rospack = RosPack()
 
     # param = rosparam.load_file(rospack.get_path('metacontrol_sim')+'/yaml/goal.yaml')
-    dict = load(file(rospack.get_path(
-        'metacontrol_sim')+'/yaml/goal.yaml', 'r'))
+    goal_yaml_file_name = rospy.get_param('/current_goal_yaml_file',
+     rospack.get_path('metacontrol_sim')+'/yaml/goal.yaml')
+    dict = load(file(goal_yaml_file_name, 'r'))
     nav_goal = MoveBaseGoal()
     nav_goal.target_pose.header.frame_id = dict['header']['frame_id']
     nav_goal.target_pose.pose.position.x = dict['pose']['position']['x']
