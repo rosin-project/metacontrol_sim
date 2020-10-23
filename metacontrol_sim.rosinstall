@@ -35,3 +35,6 @@
     local-name: mc_mdl_tomasys
     uri: https://github.com/tud-cor/mc_mdl_tomasys.git
     version: v0.1
+- git:
+    local-name: mc_rosgraph_manipulator
+    uri: https://github.com/tud-cor/mc_rosgraph_manipulator.git
