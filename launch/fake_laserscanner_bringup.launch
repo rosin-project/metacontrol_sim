@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+  <!--arg name="range_transformer" default="[0 for x in m.ranges]" /-->
+  <arg name="range_transformer" default="m.ranges" />
+  <node pkg="topic_tools" type="transform" name="fake_laserscsanner"
+        args="--wait-for-start /scan /fake_scan sensor_msgs/LaserScan 'sensor_msgs.msg.LaserScan(
+                                                                        header=m.header, 
+                                                                        angle_min=m.angle_min,
+                                                                        angle_max=m.angle_max,
+                                                                        angle_increment=m.angle_increment,
+                                                                        time_increment=m.time_increment,
+                                                                        scan_time=m.scan_time,
+                                                                        range_min=m.range_min,
+                                                                        range_max=m.range_max,
+                                                                        ranges=$(arg range_transformer),
+                                                                        intensities=m.intensities)'
+                                                                    --import sensor_msgs"/>
+</launch>
