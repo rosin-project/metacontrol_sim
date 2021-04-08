@@ -1,6 +1,6 @@
 <launch>
   <arg name="use_sim_time" default="true" />
-  <arg name="gui" default="false" />
+  <arg name="gui" default="true" />
   <arg name="headless" default="false" />
   <!--    <arg name="world_name" value="$(find ridgeback_gazebo)/worlds/ridgeback_race.world"/> -->
   <arg name="world_name" default="$(find metacontrol_sim)/worlds/ridgeback_race.world" />
@@ -30,7 +30,13 @@
   <include file="$(find ridgeback_control)/launch/teleop.launch">
     <arg name="joystick" value="false"/>
   </include>
--->
+
+  <include file="$(find metacontrol_sim)/launch/includes/pointcloud_to_laser.launch">
+     <arg name="camera" value="camera" />
+     <arg name="scan_topic" value="/camera/scan" />
+  </include>
+  -->
+  
   <rosparam param="/gazebo_ros_control/pid_gains">
     front_left_wheel:
       p: 1

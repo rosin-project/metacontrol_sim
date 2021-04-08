@@ -29,7 +29,7 @@
 
   <!-- Configuration of Ridgeback which you would like to simulate.
        See ridgeback_description for details. -->
-  <arg name="config" default="$(optenv RIDGEBACK_CONFIG base)" />
+  <arg name="config" default="$(optenv RIDGEBACK_CONFIG base_depth)" />
 
   <!-- Launch Gazebo with the specified world -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -92,7 +92,13 @@
   <include file="$(find ridgeback_control)/launch/teleop.launch">
     <arg name="joystick" value="false"/>
   </include>
--->
+  -->
+
+  <include file="$(find metacontrol_sim)/launch/includes/pointcloud_to_laser.launch">
+     <arg name="camera" value="camera" />
+     <arg name="scan_topic" value="/camera/scan" />
+  </include>
+  
   <rosparam param="/gazebo_ros_control/pid_gains">
     front_left_wheel:
       p: 1
