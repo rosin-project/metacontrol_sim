@@ -21,6 +21,13 @@ generate_messages(
 
 catkin_package()
 
+catkin_install_python(PROGRAMS
+  scripts/battery_load_control.py
+  scripts/activate_observer.py
+  scripts/objective_error_publisher.py
+  scripts/safety_distance_publisher.py
+  scripts/send_goal_from_yaml.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 include_directories(
   ${catkin_INCLUDE_DIRS}
