@@ -151,8 +151,8 @@ class BatteryLoadController:
             # Call the service here.
             service_response = set_load_service(self.power_load)
 
-        except rospy.ServiceException, e:
-            print "Service call failed: %s"%e
+        except rospy.ServiceException as e:
+            print("Service call failed: %s"%e)
 
         power_load_msg = Float32(self.power_load)
         self.power_load_publisher.publish(power_load_msg)
