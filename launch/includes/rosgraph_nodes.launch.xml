@@ -1,8 +1,8 @@
 <launch>
 
-  <rosparam ns="rosgraph_manipulator" command="load" file="$(find metacontrol_sim)/yaml/rosgraph_manipulator_config.yaml"/>
+  <rosparam ns="rosgraph_manipulator" command="load" file="$(find mc_rosgraph_manipulator)/config/rosgraph_manipulator_config.yaml"/>
 
-  <node name="rosgraph_manipulator_node" pkg="mc_rosgraph_manipulator" 
+  <node name="rosgraph_manipulator_node" pkg="mc_rosgraph_manipulator"
         type="rosgraph_manipulator.py"
         args="$(find mc_rosgraph_manipulator)/config/rosgraph_manipulator_config_nav.yaml"
         output="screen">
