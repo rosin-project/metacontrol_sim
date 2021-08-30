@@ -4,7 +4,7 @@ import rospy
 
 from actionlib import SimpleActionClient
 
-from yaml import load
+from yaml import safe_load
 # import roslib
 # roslib.load_manifest("rosparam")
 # import rosparam
@@ -20,7 +20,7 @@ if __name__ == '__main__':
     # param = rosparam.load_file(rospack.get_path('metacontrol_sim')+'/yaml/goal.yaml')
     goal_yaml_file_name = rospy.get_param('/current_goal_yaml_file',
      rospack.get_path('metacontrol_sim')+'/yaml/goal.yaml')
-    dict = load(file(goal_yaml_file_name, 'r'))
+    dict = safe_load(open(goal_yaml_file_name, 'r'))
     nav_goal = MoveBaseGoal()
     nav_goal.target_pose.header.frame_id = dict['header']['frame_id']
     nav_goal.target_pose.pose.position.x = dict['pose']['position']['x']
@@ -45,6 +45,6 @@ if __name__ == '__main__':
     else:
         rospy.logerr("MoveBase action server not available after 5 attemps")
 
-    print nav_goal
+    print(nav_goal)
     movebase_client.send_goal( nav_goal )
     rospy.loginfo('[send_goal_from_yaml_node] Safe shutdown')
